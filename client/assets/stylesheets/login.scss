@@ -1,0 +1,51 @@
+@import'./variables.scss';
+
+.wrapper {
+    text-align: center;
+  }
+h1{
+    color:$primary-blue;
+    font-size: 40px;
+}
+.loginimg {
+    height: 325px;
+    width: auto;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .loginbx {
+    height: 325px;
+    width: 400px;
+    margin-left: 20px;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .signupbx {
+    height: 50px;
+    width: 250px;
+    margin-left: 20px;
+    margin-top: 20px;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .field {
+      height: 36px;
+      width: 200px;
+      margin-top: 10px;
+      margin-bottom: 5px;
+      border-radius: 3px;
+  }
+
+  .button {
+    height: 36px;
+    width: 200px;
+    margin-top: 10px;
+    border-radius: 5px;
+    color: white;
+    background-color: $primary-teal;
+    font-size: 16px;
+}
+
