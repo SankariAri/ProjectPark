@@ -22,7 +22,7 @@
     "@reduxjs/toolkit": "^1.8.1",
     "concurrently": "^7.1.0",
     "cross-env": "^7.0.3",
-    "express": "^4.17.3",
+    "express": "^4.18.1",
     "path": "^0.12.7",
     "pg": "^8.7.3",
     "react": "^18.0.0",
