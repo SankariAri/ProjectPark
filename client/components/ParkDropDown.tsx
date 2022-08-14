@@ -1,24 +1,14 @@
 import React from 'react';
+import parkData from '../data/parkdata';
 
-const parks = {
-    Yellowstone: { hikes: [
-        {name:'Fairy Falls Trail', latitude:44.7341037505, longitude: -110.8324 },
-        {name: 'Cascade Canyon Trail', latitude: 43.767190, longitude: -110.744270},
-        {name: 'Grand Prismatic Hot Spring', latitude: 44.515430, longitude: -110.832510},
-    
-    ]},
-    Yosemite: { hikes: [
-        {},
-        {},
-        {},
-    ]}
-}
 
 const ParkDropDown = () => {
     return (
-    <div>
+    <div className ='dropdown'>
+        <h3>Select a Park: </h3>
        <select>
-           <option value = "yosemite"> Yosemite National Park</option>  
+           <option value = "yosemite"> Yosemite National Park</option>
+           <option value = "yellowstone"> Yellowstone National Park</option>    
        </select> 
     </div>
     )

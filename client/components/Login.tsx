@@ -3,6 +3,13 @@ import login from '../assets/images/login.jpg';
 
 const Login = (props) => {
 
+    // function to handle log in. Need: 
+    // error handling if fields are left empty 
+    //update state 
+    //retrieve existing data 
+    //navigate to dashboard 
+    // error for incorrect login credentials 
+
     return (
         <div className = 'wrapper'>
         <h1> Project Park </h1>
