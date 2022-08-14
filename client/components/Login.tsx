@@ -1,14 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import login from '../assets/images/login.jpg';
+import {useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { RootState } from '../features/store';
+// import { loginUser } from '../features/user/userSlice';
+
 
 const Login = (props) => {
+    // component level state
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-    // function to handle log in. Need: 
-    // error handling if fields are left empty 
-    //update state 
-    //retrieve existing data 
-    //navigate to dashboard 
-    // error for incorrect login credentials 
+    // redux state 
+    // const user = useSelector((state: RootState) => state.user.auth);
+
+    // hooks 
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    // login handler function
+    const handleLogin = async () => { 
+        navigate('/dashboard');
+    }
 
     return (
         <div className = 'wrapper'>
@@ -22,10 +35,10 @@ const Login = (props) => {
                 <input className ='field' id ="Password" placeholder="Password" />
             </div>
             <div>
-                <button className = 'button'> Login </button>
+                <button className = 'button' onClick={handleLogin} > Login </button>
             </div>
             <div className = 'signupbx'>
-             <p> Don't have an account? Sign Up</p>
+             <p> Don't have an account? <a onClick={() => { navigate('/register')} }  style={{cursor: 'pointer'}}>Sign Up</a></p>
          </div>
          </form>
          
