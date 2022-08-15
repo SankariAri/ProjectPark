@@ -19,7 +19,10 @@ const Login = (props) => {
     const dispatch = useDispatch();
 
     // login handler function
-    const handleLogin = async () => { 
+    const handleLogin = async () => {
+        if (password === '') return alert('Password field was left empty');
+        if (email === '') return alert('Email field was left empty');
+        
         navigate('/dashboard');
     }
 
@@ -29,16 +32,16 @@ const Login = (props) => {
         <img className='loginimg' src= {login} /> 
         <form className = 'loginbx'>
             <div>
-                <input className = 'field' id ="Username" placeholder="Username" />
+                <input className = 'field' id ="Username" placeholder="Username" onChange={(e)=>{ setEmail(e.target.value)} } />
             </div>
             <div>
-                <input className ='field' id ="Password" placeholder="Password" />
+                <input className ='field' id ="Password" placeholder="Password"  onChange={e => setPassword(e.target.value) }  />
             </div>
             <div>
                 <button className = 'button' onClick={handleLogin} > Login </button>
             </div>
             <div className = 'signupbx'>
-             <p> Don't have an account? <a onClick={() => { navigate('/register')} }  style={{cursor: 'pointer'}}>Sign Up</a></p>
+             <p> Don't have an account? <a onClick={() => { navigate('/signup')} }  style={{cursor: 'pointer'}}>Sign Up</a></p>
          </div>
          </form>
          

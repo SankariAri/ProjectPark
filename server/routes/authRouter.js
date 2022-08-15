@@ -22,7 +22,7 @@ authRouter.post('/login',
 //route for signup 
 
 authRouter.post('/signup', authController.signup, (req, res) => {
-    res.status(200).json({validAuth:true, user: res.locals.user})
+    return res.status(200).send('User successfully created');
 });
 
-module.exports = authRouter; 0
+module.exports = authRouter; 

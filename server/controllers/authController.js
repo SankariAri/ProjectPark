@@ -41,7 +41,7 @@ authController.login = (req, res, next) => {
 
 // signup 
 
-authController.login = (req, res, next) => {
+authController.signup = (req, res, next) => {
     const {username, password} = req.body;
     const params = [username]; 
     // need to query the database for user inputted username and password 
