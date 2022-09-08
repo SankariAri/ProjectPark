@@ -6,14 +6,12 @@ const PORT = 3000;
 const app = express();
 
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use('/auth', authRouter);
 
 app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
-
-app.use('/auth', authRouter);
 
 
 /**

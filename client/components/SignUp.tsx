@@ -18,7 +18,7 @@ const user = useSelector((state: RootState) => state.user );
  const navigate = useNavigate();
  const dispatch : AppDispatch = useDispatch();
  // registration handler function
- const handleRegister= async () => { 
+ const handleRegister= async (username, password) => { 
     // validation 
     if (!username) return alert('Username field was left empty');
     if (!password) return alert('Password field was left empty');
@@ -46,7 +46,7 @@ const user = useSelector((state: RootState) => state.user );
                     <input className ='field' id ="Password" placeholder="Password" onChange={(e) => {setPassword(e.target.value)}} />
                 </div>
                 <div>
-                    <button className = 'button' onClick = {handleRegister}> Register </button>
+                    <button className = 'button' onClick = {() => handleRegister(username, password)}> Register </button>
                 </div>
             </form>
         </div>

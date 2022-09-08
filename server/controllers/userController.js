@@ -1,14 +1,46 @@
 // Controllers are objects that hold custom middleware that manipulate data
 // Passes control to next middleware or back to the router 
 
-
 const db = require('../models/dbModel');
-const authController = {}; 
+const userController = {}; 
+
+// signup 
+
+userController.signup = (req, res, next) => {
+    console.log('ARI HERE')
+    // step 1 validate input: 
+
+    // step 2 create new user in database 
+    const signUpQuery =  `INSERT INTO users (username, password) VALUES ($1, $2) RETURNING user_id;`;
+    console.log(req.body);
+    const {username, password} = req.body.userInfo;
+    const params = [username, password] ; 
+    
+    db.query(signUpQuery, params)
+        .then( r => {
+            res.locals.newUserInfo = {id:r.rows[0].user_id};
+            return next();
+        })
+        
+        .catch(e => {
+             /* Error handling if the username already exists */
+             if (e.constraint === 'users_email_key') {
+                const err = {
+                    log: 'This email already exists.',
+                    status: 400,
+                    message: {err: 'This email already exists.'}
+                  }
+                  return next(err);
+             }
+        /* All other errors */
+        return next(e);
+    });
+};
 
 //login 
 
-authController.login = (req, res, next) => {
-    const {username, password} = req.body;
+userController.login = (req, res, next) => {
+    const {username, password} = req.body.userInfo;
     const params = [username]; 
     // need to query the database for user inputted username and password 
     const query = 'SELECT from users WHERE username = $1';
@@ -26,7 +58,7 @@ authController.login = (req, res, next) => {
          } else {
              console.log('password not matched');
              res.send({validAuth:false})
-         }
+         };
         // catch all error handler
 
     })
@@ -37,40 +69,8 @@ authController.login = (req, res, next) => {
         });
     });
 
-}
-
-// signup 
-
-authController.signup = (req, res, next) => {
-    const {username, password} = req.body;
-    const params = [username]; 
-    // need to query the database for user inputted username and password 
-    const query = 'SELECT from users WHERE username = $1';
-    db.query(query, params)
-    .then( results => {
-        // if the username already exists,means username is already taken, return valid auth false 
-        if (result.rows[0]) {
-            res.send({validAuth:false})
-        } else {
-        // if username doesnt exist, create user 
-        const signUpParams = [username, password];
-        const createUserQuery = `INSERT INTO users (username, password) VALUES ($1, $2) RETURNING *`;
-        db.query(createUserQuery, signUpParams)
-        .then (result => {
-            // save the username password to res.locals 
-            res.locals.user = result.rows[0]
-            return next (); 
-        });
-
-        }
-       
-    })
-    .catch (err => {
-        next ({
-            log: `authController.login: ERROR: ${err}`,
-            message: {err: `Error in authController.signup`}
-        });
-    });
 };
 
-module.exports = authController; 
+
+
+module.exports = userController; 

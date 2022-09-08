@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction, PayloadActionCreator } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 
 // ---------------- initial state ---------------------------------------
@@ -40,14 +40,14 @@ export const userSlice = createSlice({
 // ----------------------- thunk ----------------------------------
 export const registerUser = createAsyncThunk(
     "user/registerUser",
-    async (form: { username:string, password:string }, thunkAPI) => {
+    async (form: { username:string, password:string }, thunkApi) => {
         try {
             const response = await fetch('/auth/signup', {
                 method: 'POST', 
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                   userInfo: {
-                    name: form.username,
+                    username: form.username,
                     password: form.password
                   }
                 })
@@ -55,7 +55,7 @@ export const registerUser = createAsyncThunk(
               if (response.status === 200) return 200; 
               else return 400;
         } catch (e) {
-            return thunkAPI.rejectWithValue(e.response.data)
+            return thunkApi.rejectWithValue(e.response.data)
         }
 
     }

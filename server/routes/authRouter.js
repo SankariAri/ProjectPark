@@ -5,7 +5,7 @@
 // We are also specifying the login and signup middleware. 
 
 const express = require('express');
-const authController = require('../controllers/authController');
+const userController = require('../controllers/userController');
 const authRouter = express.Router();
 
 
@@ -13,7 +13,7 @@ const authRouter = express.Router();
 // route for login
 
 authRouter.post('/login',
-    authController.login,
+    userController.login,
     (req, res) => {
         res.status(200).json({validAuth: true, user: res.locals.user})
     });
@@ -21,7 +21,8 @@ authRouter.post('/login',
 
 //route for signup 
 
-authRouter.post('/signup', authController.signup, (req, res) => {
+authRouter.post('/signup', userController.signup, (req, res) => {
+    console.log('test')
     return res.status(200).send('User successfully created');
 });
 
