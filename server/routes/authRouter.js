@@ -12,17 +12,11 @@ const authRouter = express.Router();
 
 // route for login
 
-authRouter.post('/login',
-    userController.login,
-    (req, res) => {
-        res.status(200).json({validAuth: true, user: res.locals.user})
-    });
 
 
 //route for signup 
 
 authRouter.post('/signup', userController.signup, (req, res) => {
-    console.log('test')
     return res.status(200).send('User successfully created');
 });
 

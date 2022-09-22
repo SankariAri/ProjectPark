@@ -5,61 +5,72 @@ import { createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 interface UserState {
     userProfile: {
       id: number | null;
-      name: string;
     }, 
     registration: {
-      status: 'loaded' | 'loading'
+      status: 'loaded' | 'loading' | 'failed'
     }
-  }
+  } 
 
   const initialState : UserState = {
     userProfile: {
       id: null,
-      name: ''
     }, 
     registration: {
-      status: 'loaded'
+      status: 'loading'
     }
   };
 
 // -------------------- slice/reducers ----------------------------
 export const userSlice = createSlice({
-    name: "user",
+    name: 'user',
     initialState,
       reducers: {
         setUserId: (state, action: PayloadAction<number>) => { state.userProfile.id = action.payload }
       },
-      extraReducers: (builder) => {
-         // register user cases
-    builder.addCase(registerUser.fulfilled, (state, action) => { state.registration.status = 'loaded' }),
-    builder.addCase(registerUser.rejected, (state, action) => { state.registration.status = 'loaded' }),
-    builder.addCase(registerUser.pending, (state, action) => { state.registration.status = 'loading' })
-      },
+    extraReducers: (builder) => {
+      builder.addCase(registerUser.fulfilled, (state) => { state.registration.status = 'loaded' }),
+      builder.addCase(registerUser.rejected, (state) => { state.registration.status = 'failed' }),
+      builder.addCase(registerUser.pending, (state) => { state.registration.status = 'loading' })
+    }
 })
 
 // ----------------------- thunk ----------------------------------
 export const registerUser = createAsyncThunk(
-    "user/registerUser",
-    async (form: { username:string, password:string }, thunkApi) => {
-        try {
-            const response = await fetch('/auth/signup', {
-                method: 'POST', 
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  userInfo: {
-                    username: form.username,
-                    password: form.password
-                  }
-                })
-              });
-              if (response.status === 200) return 200; 
-              else return 400;
-        } catch (e) {
-            return thunkApi.rejectWithValue(e.response.data)
-        }
+  '/user/registerUser',
+  async (form: {username: string, password: string }, thunkApi) => {
 
-    }
-    )
-    export const {setUserId} = userSlice.actions;
-  
+    try {
+      console.log('entered fetch req')
+      const response = await fetch('/api/auth/signup', {
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userInfo: {
+            username: form.username,
+            password: form.password
+          }
+        })
+      });
+      console.log(response)
+      if (response.status === 200) return 200; 
+      else return 400;
+    } catch (e) {
+      console.log(e.response.data)
+      return thunkApi.rejectWithValue(e.response.data);
+      
+    };
+  }
+);
+    
 export default userSlice.reducer; 
+export const {setUserId} = userSlice.actions;
+
+// const response = await fetch('/api/auth/signup', {
+//   method: 'POST', 
+//   headers: { 'Content-Type': 'application/json' },
+//   body: JSON.stringify({
+//     userInfo: {
+//       username: form.username,
+//       password: form.password
+//     }
+//   }),

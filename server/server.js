@@ -7,7 +7,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use('/auth', authRouter);
+app.use('/api/auth', authRouter);
 
 app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'));

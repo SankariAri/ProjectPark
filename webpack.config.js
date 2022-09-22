@@ -6,7 +6,7 @@ let NODE_ENV;
 module.exports = {
   entry: './client/index.js',
   output: {
-    path:path.resolve(__dirname, "dist"),
+    path:path.resolve(__dirname, "build"),
   },
   mode: process.env.NODE_ENV,
   module: {

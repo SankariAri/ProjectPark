@@ -7,7 +7,6 @@ const userController = {};
 // signup 
 
 userController.signup = (req, res, next) => {
-    console.log('ARI HERE')
     // step 1 validate input: 
 
     // step 2 create new user in database 
@@ -39,37 +38,37 @@ userController.signup = (req, res, next) => {
 
 //login 
 
-userController.login = (req, res, next) => {
-    const {username, password} = req.body.userInfo;
-    const params = [username]; 
-    // need to query the database for user inputted username and password 
-    const query = 'SELECT from users WHERE username = $1';
-    db.query(query, params)
-    .then(results => {
-         // if username doesn't exist send false back for valid authentication 
-         if (results.rows.length === 0) {
-             res.send({validAuth: flase})
-         // if username exists in db and password matches, save users info to res.locals and pass to next middleware
-         } else if (results.rows[0].password === password) {
-             console.log('password matched!');
-             res.locals.user = result.rows[0];
-            return next (); 
-        // if username exists but password doesn't match send false back for valid authentication and log the error
-         } else {
-             console.log('password not matched');
-             res.send({validAuth:false})
-         };
-        // catch all error handler
+// userController.login = (req, res, next) => {
+//     const {username, password} = req.body.userInfo;
+//     const params = [username]; 
+//     // need to query the database for user inputted username and password 
+//     const query = 'SELECT from users WHERE username = $1';
+//     db.query(query, params)
+//     .then(results => {
+//          // if username doesn't exist send false back for valid authentication 
+//          if (results.rows.length === 0) {
+//              res.send({validAuth: flase})
+//          // if username exists in db and password matches, save users info to res.locals and pass to next middleware
+//          } else if (results.rows[0].password === password) {
+//              console.log('password matched!');
+//              res.locals.user = result.rows[0];
+//             return next (); 
+//         // if username exists but password doesn't match send false back for valid authentication and log the error
+//          } else {
+//              console.log('password not matched');
+//              res.send({validAuth:false})
+//          };
+//         // catch all error handler
 
-    })
-    .catch (err => {
-        next ({
-            log: `authController.login: ERROR: ${err}`,
-            message: {err: `Error in authController.login`}
-        });
-    });
+//     })
+//     .catch (err => {
+//         next ({
+//             log: `authController.login: ERROR: ${err}`,
+//             message: {err: `Error in authController.login`}
+//         });
+//     });
 
-};
+// };
 
 
 
